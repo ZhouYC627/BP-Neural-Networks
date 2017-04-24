@@ -23,8 +23,6 @@ def makeMatrix(m, n, fill=0.0):
     for i in range(m):
         matrix.append([fill]*n)
     matrix = 0.1*np.random.random((m,n))-0.05
-    #matrix = np.random.random((m,n))
-    #print(matrix)
     return matrix
 
 class NeuralNetwork:
@@ -56,16 +54,15 @@ class NeuralNetwork:
                 #print('error: ', new_error)
                 g = dsigmoid(y)*(tar-y)#no
                 temp = np.dot(self.w, np.mat(g).T)
-                temp.shape = (1,100)
-                e = np.multiply(b*(np.ones((1,100))-b),temp)#nh
-                #print(e.shape)
+                temp.shape = (1,self.nh)
+                e = np.multiply(b*(np.ones((1,self.nh))-b),temp)#nh
+
                 self.w = self.w + learning_rate*np.dot(np.mat(b).T, np.mat(g))
                 self.v = self.v + learning_rate*np.dot(np.mat(x).T, np.mat(e))
-                #print('ai', self.ai)
                 self.ao = self.ao - learning_rate*g
                 self.ai = self.ai - learning_rate*e
                 #input("pause\n")
-            if abs(last_error-new_error)<10:
+            if abs(last_error-new_error)/len(train)<0.003:
                 print('epochs: ', k)
                 break
             print('error:' , new_error)
