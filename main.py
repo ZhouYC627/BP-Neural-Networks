@@ -6,10 +6,11 @@ from time import time
 import math
 '''
 import matplotlib.pyplot as plt
-#for x in data:
-x = data[10]
-plt.imshow(x.reshape((20,20),order='F'),cmap='gray')
-plt.show()
+data = np.genfromtxt('train_data.csv', delimiter=',')
+for i in range(10):
+    x = data[i]
+    plt.imshow(x.reshape((20,20),order='F'),cmap='gray')
+    plt.show()
 '''
 
 def sigmoid(x):
@@ -63,9 +64,9 @@ class NeuralNetwork:
                 self.ai = self.ai - learning_rate*e
                 #input("pause\n")
             if abs(last_error-new_error)/len(train)<0.003:
-                print('epochs: ', k)
+                print('rounds: ', k)
                 break
-            print('error:' , new_error)
+            print('error:' , new_error/len(train))
             last_error = new_error
             new_error = 0.0
 
